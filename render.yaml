@@ -1,9 +1,10 @@
 services:
   - type: web
     name: easyrti-backend
+    rootDir: backend # Specify the backend directory
     runtime: node
-    buildCommand: "cd backend && npm install"
-    startCommand: "cd backend && node server.js"
+    buildCommand: "npm install"
+    startCommand: "node server.js"
     envVars:
       - key: MONGO_URL
         value: "mongodb+srv://feroz:feroz2222@easyrti.b29fu.mongodb.net/easyrti"
@@ -24,10 +25,11 @@ services:
       - key: FRONTEND_URL
         value: "https://easyrti-frontend.onrender.com"
 
-  - type: web
+  - type: static
     name: easyrti-frontend
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: "frontend/dist"
+    rootDir: frontend # Specify the frontend directory
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "dist"
     envVars:
       - key: VITE_BACKEND_API_URL
         value: "https://easyrti-backend.onrender.com"
