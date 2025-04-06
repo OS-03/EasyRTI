@@ -116,6 +116,6 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is Running on port ${process.env.PORT}`);
+app.listen(process.env.PORT || 3000, "0.0.0.0", () => {
+  console.log(`Server is Running on port ${process.env.PORT || 3000}`);
 });

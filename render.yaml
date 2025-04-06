@@ -25,7 +25,7 @@ services:
       - key: FRONTEND_URL
         value: "https://easyrti-frontend.onrender.com"
 
-  - type: static
+  - type: web
     name: easyrti-frontend
     rootDir: frontend # Specify the frontend directory
     buildCommand: "npm install && npm run build"
