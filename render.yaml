@@ -2,11 +2,11 @@ services:
   - type: web
     name: easyrti-backend
     runtime: node
-    buildCommand: "npm install"
-    startCommand: "node server.js"
+    buildCommand: "cd backend && npm install"
+    startCommand: "cd backend && node server.js"
     envVars:
       - key: MONGO_URL
-        value: "easyrti-db"
+        value: "mongodb+srv://feroz:feroz2222@easyrti.b29fu.mongodb.net/easyrti"
       - key: PORT
         value: 8053
       - key: CLOUD_NAME
@@ -22,12 +22,12 @@ services:
       - key: JWT_EXPIRES_IN
         value: 43200
       - key: FRONTEND_URL
-        value: <RENDER_FRONTEND_URL>
+        value: "https://easyrti-frontend.onrender.com"
+
   - type: web
     name: easyrti-frontend
-    runtime: static
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: dist
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "frontend/dist"
     envVars:
       - key: VITE_BACKEND_API_URL
-        value: <RENDER_BACKEND_URL>/api/v1/
+        value: "https://easyrti-backend.onrender.com"
