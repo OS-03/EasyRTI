@@ -1,0 +1,6 @@
+
+.MuiToolbar-root, .MuiToolbar-gutters ,.MuiToolbar-regular ,.css-1ygil4i-MuiToolbar-root, #back-to-top-anchor {
+ margin: 0 !important;
+ min-height: 0 !important;
+ padding: 0;
+}
