@@ -1,39 +1,138 @@
-# Material UI - Vite.js in TypeScript example
+# EasyRTI Portal
 
-## How to use
+An Automated RTI Portal For Indian Citizen
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+EasyRTI is a comprehensive platform designed to streamline the RTI (Right to Information) process. It includes a frontend built with Vite.js and Material UI, a backend powered by Node.js and Express, and an AI model for text classification and summarization.
 
-<!-- #repo-reference -->
+---
 
-```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/material-ui-vite-ts
-cd material-ui-vite-ts
-```
+## Frontend
 
-Install it and run:
+### How to Run Locally
 
-```bash
-npm install
-npm run dev
-```
+1. Navigate to the `frontend` directory:
+   ```bash
+   cd frontend
+   ```
 
-or:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-<!-- #repo-reference -->
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
+4. Open your browser and navigate to `http://localhost:5173`.
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-vite-ts)
+### Deployment on Render
 
-## The idea behind the example
+1. Build the frontend:
+   ```bash
+   npm run build
+   ```
 
-This example uses [Vite.js](https://github.com/vitejs/vite).
-It includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI.
+2. Set the **Publish Directory** to `dist` in Render.
 
-## What's next?
+3. Add the following environment variable in Render:
+   - `VITE_BACKEND_API_URL`: URL of the deployed backend.
 
-<!-- #host-reference -->
+---
 
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+## Backend
+
+### How to Run Locally
+
+1. Navigate to the `backend` directory:
+   ```bash
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file with the following variables:
+   ```env
+   PORT=5000
+   MONGO_URI=<your-mongodb-uri>
+   CLOUD_NAME=<your-cloudinary-cloud-name>
+   CLOUD_API_KEY=<your-cloudinary-api-key>
+   CLOUD_API_SECRET=<your-cloudinary-api-secret>
+   FRONTEND_URL=http://localhost:5173
+   ```
+
+4. Start the server:
+   ```bash
+   npm start
+   ```
+
+5. The backend will run on `http://localhost:5000`.
+
+### Deployment on Render
+
+1. Set the **Build Command** to:
+   ```bash
+   npm install
+   ```
+
+2. Set the **Start Command** to:
+   ```bash
+   npm start
+   ```
+
+3. Add the required environment variables in Render:
+   - `PORT`
+   - `MONGO_URI`
+   - `CLOUD_NAME`
+   - `CLOUD_API_KEY`
+   - `CLOUD_API_SECRET`
+   - `FRONTEND_URL`
+
+---
+
+## Model
+
+### How to Run Locally
+
+1. Ensure Python 3.8+ is installed.
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Start the model server:
+   ```bash
+   python app.py
+   ```
+
+4. The model will run on `http://127.0.0.1:8000`.
+
+### Deployment on Render
+
+1. Create a **Web Service** for the model.
+
+2. Set the **Start Command** to:
+   ```bash
+   python app.py
+   ```
+
+3. Add any required environment variables (if applicable).
+
+---
+
+## Features
+
+- **Frontend**: Built with Vite.js, Material UI, and TypeScript.
+- **Backend**: Node.js, Express, MongoDB, and Cloudinary integration.
+- **Model**: AI-powered text classification and summarization.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
