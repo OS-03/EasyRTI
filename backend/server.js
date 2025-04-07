@@ -75,7 +75,6 @@ const sessionOptions = {
 
 // middleware
 app.use(session(sessionOptions));
-app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
