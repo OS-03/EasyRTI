@@ -43,13 +43,20 @@ dotenv.config({});
 connectDB();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    if (!origin || origin === process.env.FRONTEND_URL) {
+      callback(null, true); // Allow requests from the frontend or no origin (e.g., Postman)
+    } else {
+      console.error(`Blocked by CORS: ${origin}`); // Log blocked origins
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200, // For legacy browser support
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Ensure CORS is applied before routes
 
 const sessionOptions = {
   secret: process.env.SECRET_KEY,
@@ -71,6 +78,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
+  console.log(`Incoming request from origin: ${req.headers.origin}`); // Log request origin
   console.log(`${req.method} ${req.url}`); // Log incoming requests
   next();
 });
@@ -81,7 +89,10 @@ app.use("/api/v1/department", departmentRoute);
 app.use("/api/v1/requests", requestRoute);
 app.use("/api/v1/application", applicationRoute);
 
-
+// Handle undefined API routes
+app.all("/api/*", (req, res, next) => {
+  res.status(404).json({ error: "API endpoint not found" });
+});
 
 // app.use(favicon(path.join(__dirname, '/favicon/', 'favicon.ico')))
 // use static authenticate method of model in LocalStrategy
@@ -117,8 +128,8 @@ app.all("*", (req, res, next) => {
 // error handling middleware
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something Went Wrong!" } = err;
-  console.log(err);
-  next(err);
+  console.error(err);
+  res.status(statusCode).json({ error: message }); // Ensure JSON response for errors
 });
 
 const PORT = process.env.PORT || 3000;
