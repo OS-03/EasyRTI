@@ -29,7 +29,13 @@ services:
     name: easyrti-frontend
     rootDir: frontend # Specify the frontend directory
     buildCommand: "npm install && npm run build"
-    staticPublishPath: "dist"
     envVars:
-      - key: VITE_BACKEND_API_URL
-        value: "https://easyrti-backend.onrender.com"
+        - key: VITE_BACKEND_API_URL
+          value: "https://easyrti-backend.onrender.com"
+  
+  - type: web
+    name: easyrti-model
+    rootDir: model
+    runtime: python
+    buildCommand: ""
+    startCommand: "python app.py"

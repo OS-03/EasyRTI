@@ -122,7 +122,7 @@ export const getUserRequests = async (req, res) => {
 
         for (const request of requests) {
             if (!request.summary) {
-                const response = await fetch('http://127.0.0.1:8000/text-summarize-response', {
+                const response = await fetch('https://easyrti-model.onrender.com/text-summarize-response', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text: request.description }),
