@@ -31,11 +31,10 @@ services:
     buildCommand: "npm install && npm run build"
     envVars:
         - key: VITE_BACKEND_API_URL
-          value: "https://easyrti-backend.onrender.com"
   
   - type: web
     name: easyrti-model
-    rootDir: model
+    rootDir: backend # Update to the backend directory where the model resides
     runtime: python
-    buildCommand: ""
-    startCommand: "python app.py"
+    buildCommand: "pip install -r requirements.txt" # Install dependencies
+    startCommand: "uvicorn bert_model:app --host 0.0.0.0 --port 8000" # Start FastAPI app
