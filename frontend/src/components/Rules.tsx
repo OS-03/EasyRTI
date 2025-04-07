@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useGetAllAdminRequests from '@/hooks/useGetAllAdminRequests';
 import Navbar from './shared/Navbar';
 import Footer from './shared/Footer';
+import { toast } from 'sonner';
 
 function Rules() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Rules() {
     const handleCancel = (event: React.MouseEvent) => {
         event.preventDefault(); // Prevent default behavior
         try {
+            toast.error("Please Login In To Request an RTI");
             navigate('/'); // Redirect to home
         } catch (error) {
             console.error('Error navigating to home:', error);
