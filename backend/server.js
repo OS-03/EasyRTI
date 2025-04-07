@@ -55,6 +55,13 @@ app.use(cors(corsOptions)); // Apply CORS middleware
 // Handle preflight requests explicitly
 app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
 
+// Ensure CORS headers are set for all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 const sessionOptions = {
   secret: process.env.SECRET_KEY,
   resave: false,
@@ -89,29 +96,6 @@ app.use("/api/v1/application", applicationRoute);
 app.all("/api/*", (req, res, next) => {
   res.status(404).json({ error: "API endpoint not found" });
 });
-
-// app.use(favicon(path.join(__dirname, '/favicon/', 'favicon.ico')))
-// use static authenticate method of model in LocalStrategy
-// passport.use(new LocalStrategy(User.authenticate()));
-// use static serialize and deserialize of model for passport session support
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
-// app.use((req, res, next) => {
-//   res.locals.success = req.flash("success");
-//   res.locals.error = req.flash("error");
-//   res.locals.currUser = req.user;
-//   next();
-// });
-
-// app.get('/demouser',async (req,res)=>{
-//   let fakeUser = new User({
-//     email:"student@gmail.com",
-//     username:"delta-student"
-//   })
-//   const registeredUser = await User.register(fakeUser,"helloworld");
-//   res.send(registeredUser);
-// })
 
 app.get("/", (req, res) => {
   res.send("Server Running");
