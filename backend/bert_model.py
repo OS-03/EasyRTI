@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from transformers import pipeline
+# Removed unused import: pipeline
 from fastapi.middleware.cors import CORSMiddleware
 import torch
 from torch.nn.functional import softmax
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, MBartForConditionalGeneration, MBartTokenizer
+from transformers.utils import logging  # type: ignore
+import importlib
 
 app = FastAPI()
 
@@ -28,12 +30,20 @@ label_to_department = {
     6: "Housing",
     7: "Transport"
 }
-
 # Load classifier model and tokenizer
 classifier_model_name = "conan04/bert_rti_multilingual"
 classifier_tokenizer = AutoTokenizer.from_pretrained(classifier_model_name)
-device = "mps" if torch.backends.mps.is_available() else "cpu"
+
+# Ensure compatibility with available devices
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 classifier_model = AutoModelForSequenceClassification.from_pretrained(classifier_model_name).to(device)
+
+# Check if sentencepiece is installed
+if importlib.util.find_spec("sentencepiece") is None:
+    raise ImportError(
+        "The SentencePiece library is required but not installed. "
+        "Please install it using 'pip install sentencepiece' and restart the application."
+    )
 
 # Load summarizer model and tokenizer
 summarizer_model_name = "conan04/mbart_request_summarizer2"
@@ -49,7 +59,7 @@ async def classify_request(request: RTIRequest):
         # Tokenize the text for classification
         inputs = classifier_tokenizer(
             request.text, return_tensors="pt", truncation=True, padding=True, max_length=512
-        ).to(classifier_model.device)
+        ).to(device)
 
         # Perform inference
         outputs = classifier_model(**inputs)
@@ -74,7 +84,7 @@ async def summarize_request(request: RTIRequest):
         # Tokenize the input text for summarization
         inputs = summarizer_tokenizer(
             request.text, return_tensors="pt", truncation=True, padding=True, max_length=512
-        ).to(summarizer_model.device)
+        ).to(device)
 
         # Generate the summary
         summary_ids = summarizer_model.generate(
@@ -97,7 +107,7 @@ async def text_summarize_response(request: RTIRequest):
         # Tokenize the input text for summarization
         inputs = summarizer_tokenizer(
             request.text, return_tensors="pt", truncation=True, padding=True, max_length=512
-        ).to(summarizer_model.device)
+        ).to(device)
 
         # Generate the summary
         summary_ids = summarizer_model.generate(

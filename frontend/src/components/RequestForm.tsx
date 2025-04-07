@@ -10,13 +10,13 @@ import { APPLICATION_API_END_POINT, REQUEST_API_END_POINT } from '@/utils/consta
 import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setSingleRequest } from '@/redux/requestSlice'; // Ensure this action exists
-import useGetAllAdminRequests from '@/hooks/useGetAllAdminRequests';
 import useSetAllApplicate from '@/hooks/useGetAllRequest'; // Ensure this hook exists
 import Footer from './shared/Footer';
 
-let debounceTimeout: NodeJS.Timeout;
+
 
 const RequestForm = () => {
+    let debounceTimeout: NodeJS.Timeout;
     const [input, setInput] = useState({
         title: "",
         description: "",
@@ -57,7 +57,7 @@ const RequestForm = () => {
                 // Safely access the department field and handle unknown class
                 const summary = data?.department || "Unknown";
     
-                if (data.confidence > 0.55)
+                if (data.confidence > 0.5)
                 setClassifiedDepartment(summary); // Update state with the correct value
             } catch (error) {
                 console.error("Error:", error);
@@ -122,7 +122,7 @@ const RequestForm = () => {
                     toast.success(applyRes.data.message);
 
                     // Call the setAllApplicate hook
-                    useSetAllApplicate(); // Pass the correct request ID
+                   // useSetAllApplicate(); // Pass the correct request ID
                 } else {
                     toast.error(applyRes.data.message || "Failed to apply the request.");
                 }

@@ -23,6 +23,7 @@ import UserProtectedRoute from "./components/UserProtectedRoute";
 import RequestStatus from "./components/RequestStatus";
 import Rules from "./components/Rules";
 import PostRequestdemo from "./components/PostRequestdemo";
+import CookiesPopover from "./components/CookiesPopover";
 
 
 const appRouter = createBrowserRouter([
@@ -111,7 +112,7 @@ export default function App() {
     >
 
       <RouterProvider router={appRouter} />
-
+      <CookiesPopover/>
     </Container>
   );
 }

@@ -28,22 +28,22 @@ interface SubmittedRequest {
         createdAt: string;
         updatedAt: string;
     };
+    summary?: string; // Add summary field
 }
 
 const RequestStatus = () => {
     const dispatch = useDispatch();
     const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>({});
+    const { allsubmittedRequests = [] } = useSelector((store: RootState) => store.request) as { allsubmittedRequests: SubmittedRequest[] };
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData: () => Promise<void> = async () => {
             try {
-                // Fetch submitted requests
                 const res = await axios.get(`${REQUEST_API_END_POINT}/user`, { withCredentials: true });
                 if (res.data.success) {
                     dispatch(setAllSubmittedRequests(res.data.requests)); // Update Redux store with user's requests
                 }
 
-                // Fetch application status if there are submitted requests
                 const allRequests = res.data.requests as SubmittedRequest[];
                 if (allRequests.length > 0) {
                     for (const request of allRequests) {
@@ -67,8 +67,6 @@ const RequestStatus = () => {
         fetchData();
     }, [dispatch]);
 
-    const { allsubmittedRequests = [] } = useSelector((store: RootState) => store.request) as { allsubmittedRequests: SubmittedRequest[] };
-   console.log(allsubmittedRequests);
     return (
         <div>
             <Navbar />
@@ -81,6 +79,7 @@ const RequestStatus = () => {
                                 <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-600">Date</TableHead>
                                 <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-600">Title</TableHead>
                                 <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-600">Department</TableHead>
+                                <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-600">RTI Request Response</TableHead>
                                 <TableHead className="px-4 py-2 text-left text-sm font-medium text-gray-600">Status</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -89,23 +88,31 @@ const RequestStatus = () => {
                             {
                                 allsubmittedRequests.length === 0 ? (
                                     <TableRow>
-                                        <TableCell colSpan={4} className="text-center px-4 py-6 text-gray-500">
+                                        <TableCell colSpan={5} className="text-center px-4 py-6 text-gray-500">
                                             You haven't submitted any requests yet.
                                         </TableCell>
                                     </TableRow>
-                                ) : (
+                                ) :  applicationStatuses[allsubmittedRequests[0].applications[0]] ? (
                                     allsubmittedRequests.map((request) => (
                                         <TableRow key={request._id} className="hover:bg-gray-50">
                                             <TableCell className="px-4 py-2 text-sm text-gray-700">{request?.createdAt?.split("T")[0]}</TableCell>
                                             <TableCell className="px-4 py-2 text-sm text-gray-700">{request.title}</TableCell>
-                                            <TableCell className="px-4 py-2 text-sm text-gray-700">{request.department?.name }</TableCell>
+                                            <TableCell className="px-4 py-2 text-sm text-gray-700">{request.department?.name}</TableCell>
+                                            <TableCell className="px-4 py-2 text-xs/4 text-gray-700">{request.summary || "Available Soon!"}</TableCell>
                                             <TableCell className="px-4 py-2 text-sm">
                                                 <Badge className={`px-2 py-1 rounded-full text-white ${request?.applications?.length === 0 ? 'bg-yellow-500' : applicationStatuses[request.applications[0]] === 'accepted' ? 'bg-green-500' : applicationStatuses[request.applications[0]] === 'rejected' ? 'bg-red-500' : 'bg-gray-400'}`}>
                                                     {request?.applications?.length === 0 ? "PENDING" : applicationStatuses[request.applications[0]] || "SUBMITTED"}
                                                 </Badge>
-                                             </TableCell>
+                                            </TableCell>
                                         </TableRow>
                                     ))
+                                ) : (
+                                    <TableRow>
+                                    <TableCell colSpan={5} className="text-center px-4 py-6 text-gray-500">
+                                        Wait for Few Minutes Requests Loading...
+                                    </TableCell>
+                                </TableRow>
+
                                 )
                             }
                         </TableBody>

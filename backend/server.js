@@ -20,10 +20,6 @@ import requestRoute from "./routes/request.route.js";
 import applicationRoute from "./routes/application.route.js";
 import ExpressError from "./utils/ExpressError.js"
 
-
-
-
-dotenv.config({});
 const app = express();
 app.set("view engine", "ejs");
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -47,8 +43,11 @@ dotenv.config({});
 connectDB();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL,
   credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
 
@@ -70,6 +69,12 @@ app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`); // Log incoming requests
+  next();
+});
+
 // api's
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/department", departmentRoute);

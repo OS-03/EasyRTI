@@ -98,6 +98,7 @@ export const getAdminRequests = async (req, res) => {
             path:'department',
             createdAt:-1
         });
+
         if (!requests) {
             return res.status(404).json({
                 message: "RTI Requests not found.",
@@ -119,6 +120,21 @@ export const getUserRequests = async (req, res) => {
         const userId = req.id; // Logged-in user ID
         const requests = await Request.find({ created_by: userId }).populate("department").sort({ createdAt: -1 });
 
+        for (const request of requests) {
+            if (!request.summary) {
+                const response = await fetch('http://127.0.0.1:8000/text-summarize-response', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: request.description }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    request.summary = data.generated_response_summary;
+                    await request.save();
+                }
+            }
+        }
         if (!requests || requests.length === 0) {
             return res.status(200).json({
                 message: "No requests found.",
@@ -177,3 +193,6 @@ export const updateRequestStatus = async (req, res) => {
         });
     }
 };
+
+
+

@@ -38,7 +38,7 @@ export const applyRequest = async (req, res) => {
         request.applications.push(newApplication._id);
         await request.save();
         return res.status(201).json({
-            message:"Request applied successfully.",
+            message:"Request submitted successfully wait for few seconds to load.",
             success:true
         });
 
