@@ -8,9 +8,6 @@ import ejsMate from "ejs-mate";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import favicon from "serve-favicon";
-//import logger from "morgan";
 import bodyParser from "body-parser";
 import connectDB from "./utils/db.js";
 import cookieParser from "cookie-parser";
@@ -19,6 +16,7 @@ import departmentRoute from "./routes/department.route.js";
 import requestRoute from "./routes/request.route.js";
 import applicationRoute from "./routes/application.route.js";
 import ExpressError from "./utils/ExpressError.js"
+import logger from "morgan";
 
 const app = express();
 app.set("view engine", "ejs");
@@ -31,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodoverride("_method"));
 app.engine("ejs", ejsMate);
+app.use(logger("dev")); // Use morgan middleware for logging HTTP requests
 // parse application/json
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
@@ -61,23 +60,36 @@ app.use((req, res, next) => {
 });
 
 const sessionOptions = {
-  secret: process.env.SECRET_KEY,
-  resave: false,
-  saveUninitialized: true,
+  secret: process.env.SECRET_KEY || "defaultSecret", // Ensure SECRET_KEY is set
+  resave: false, // Avoid unnecessary session resaving
+  saveUninitialized: false, // Do not save uninitialized sessions
   cookie: {
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    httpOnly: true, //crossscripting attack is secured
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    httpOnly: true, // Prevent client-side access to cookies
+    secure: process.env.NODE_ENV === "production" && process.env.SECURE_COOKIES === "true", // Use secure cookies only if explicitly enabled
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allow cross-origin cookies in production
   },
 };
 
 // middleware
 app.use(session(sessionOptions));
-app.use(cors(corsOptions));
+app.use(cors({ ...corsOptions, credentials: true })); // Ensure credentials are allowed
 app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Passport serialization and deserialization
+passport.serializeUser((user, done) => {
+  done(null, user.id); // Serialize user ID
+});
+
+passport.deserializeUser((id, done) => {
+  // Replace with your user fetching logic
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
 
 app.use((req, res, next) => {
   console.log(`Incoming request from origin: ${req.headers.origin}`); // Log request origin
@@ -85,19 +97,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware to check authentication
-const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return next(); // User is authenticated
-  }
-  res.status(401).json({ error: "Unauthorized" }); // Respond with 401 if not authenticated
-};
-
 // api's
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/department", departmentRoute);
-app.use("/api/v1/requests", isAuthenticated, requestRoute);
-app.use("/api/v1/application", isAuthenticated, applicationRoute);
+app.use("/api/v1/requests",  requestRoute);
+app.use("/api/v1/application", applicationRoute);
 
 // Handle undefined API routes
 app.all("/api/*", (req, res, next) => {
