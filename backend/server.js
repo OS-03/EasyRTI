@@ -37,7 +37,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-app.use(cors({}));
 dotenv.config({});
 
 //databse connection
@@ -50,7 +49,6 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Ensure OPTIONS is allowed
   allowedHeaders: ["Content-Type", "Authorization"], // Allow required headers
 };
-app.use(cors(corsOptions)); // Apply CORS middleware
 
 // Handle preflight requests explicitly
 app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
@@ -75,6 +73,7 @@ const sessionOptions = {
 
 // middleware
 app.use(session(sessionOptions));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
