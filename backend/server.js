@@ -85,11 +85,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware to check authentication
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next(); // User is authenticated
+  }
+  res.status(401).json({ error: "Unauthorized" }); // Respond with 401 if not authenticated
+};
+
 // api's
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/department", departmentRoute);
-app.use("/api/v1/requests", requestRoute);
-app.use("/api/v1/application", applicationRoute);
+app.use("/api/v1/requests", isAuthenticated, requestRoute);
+app.use("/api/v1/application", isAuthenticated, applicationRoute);
 
 // Handle undefined API routes
 app.all("/api/*", (req, res, next) => {
