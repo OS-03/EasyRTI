@@ -53,10 +53,13 @@ const corsOptions = {
   },
   credentials: true,
   optionsSuccessStatus: 200, // For legacy browser support
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Ensure OPTIONS is allowed
+  allowedHeaders: ["Content-Type", "Authorization"], // Allow required headers
 };
 app.use(cors(corsOptions)); // Ensure CORS is applied before routes
+
+// Handle preflight requests explicitly
+app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
 
 const sessionOptions = {
   secret: process.env.SECRET_KEY,
