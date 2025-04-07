@@ -11,6 +11,10 @@ router.route("/get/:id").get(isAuthenticated, getRequestById);
 router.route("/user").get(isAuthenticated, getUserRequests); // Ensure this route exists and is correctly implemented
 router.route("/status/:id/update").post(isAuthenticated, updateRequestStatus);
 
+router.get("/user", isAuthenticated, (req, res) => {
+  // Example route that requires authentication
+  res.json({ message: "Authenticated user data" });
+});
 
 export default router;
 

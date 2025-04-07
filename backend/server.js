@@ -49,6 +49,8 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"], // Allow required headers
 };
 
+ // Ensure credentials are allowed
+
 // Handle preflight requests explicitly
 app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
 
@@ -61,7 +63,7 @@ app.use((req, res, next) => {
 
 const sessionOptions = {
   secret: process.env.SECRET_KEY || "defaultSecret", // Ensure SECRET_KEY is set
-  resave: false, // Avoid unnecessary session resaving
+  resave: true, // Avoid unnecessary session resaving
   saveUninitialized: false, // Do not save uninitialized sessions
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
@@ -73,7 +75,7 @@ const sessionOptions = {
 
 // middleware
 app.use(session(sessionOptions));
-app.use(cors({ ...corsOptions, credentials: true })); // Ensure credentials are allowed
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
