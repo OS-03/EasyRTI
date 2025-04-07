@@ -37,29 +37,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(cors({}));
 dotenv.config({});
 
 //databse connection
 connectDB();
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || origin === process.env.FRONTEND_URL) {
-      callback(null, true); // Allow requests from the frontend or no origin (e.g., Postman)
-    } else {
-      console.error(`Blocked by CORS: ${origin}`); // Log blocked origins
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200, // For legacy browser support
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Ensure OPTIONS is allowed
-  allowedHeaders: ["Content-Type", "Authorization"], // Allow required headers
-};
-app.use(cors(corsOptions)); // Ensure CORS is applied before routes
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin || origin === process.env.FRONTEND_URL) {
+//       callback(null, true); // Allow requests from the frontend or no origin (e.g., Postman)
+//     } else {
+//       console.error(`Blocked by CORS: ${origin}`); // Log blocked origins
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+//   optionsSuccessStatus: 200, // For legacy browser support
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Ensure OPTIONS is allowed
+//   allowedHeaders: ["Content-Type", "Authorization"], // Allow required headers
+// };
+// app.use(cors(corsOptions)); // Ensure CORS is applied before routes
 
-// Handle preflight requests explicitly
-app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
+// // Handle preflight requests explicitly
+// app.options("*", cors(corsOptions)); // Respond to preflight requests for all routes
 
 const sessionOptions = {
   secret: process.env.SECRET_KEY,
