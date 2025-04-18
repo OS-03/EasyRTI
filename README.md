@@ -67,7 +67,7 @@ EasyRTI is a comprehensive platform designed to streamline the RTI (Right to Inf
 
 4. Start the server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. The backend will run on `http://localhost:5000`.
