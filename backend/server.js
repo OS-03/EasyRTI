@@ -15,7 +15,6 @@ import userRoute from "./routes/user.route.js";
 import departmentRoute from "./routes/department.route.js";
 import requestRoute from "./routes/request.route.js";
 import applicationRoute from "./routes/application.route.js";
-import chatRoute from "./routes/chat.route.js"; // Ensure correct import of chat route
 import ExpressError from "./utils/ExpressError.js"
 import logger from "morgan";
 
@@ -106,7 +105,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/department", departmentRoute);
 app.use("/api/v1/requests", requestRoute);
 app.use("/api/v1/application", applicationRoute);
-app.use("/api/v1/chat", chatRoute); // Ensure this route is correctly registered
+// app.use("/api/v1/chat", chatRoute); // Ensure this route is correctly registered
 // Handle undefined API routes
 app.all("/api/*", (req, res, next) => {
   res.status(404).json({ error: "API endpoint not found" });
