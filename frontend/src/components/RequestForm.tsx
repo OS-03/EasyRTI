@@ -18,7 +18,7 @@ import Footer from './shared/Footer';
 // Add your Mapbox access token 
 const MAPBOX_ACCESS_TOKEN = (import.meta as any).env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const isProd = false;
+const isProd = true;
 
 const RequestForm = () => {
     let debounceTimeout: NodeJS.Timeout;
@@ -107,7 +107,9 @@ const RequestForm = () => {
         formData.append("aadhaar", file);
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/extract-aadhaar", {
+            const response = await fetch(
+                isProd ? "https://easyrti-model.onrender.com/extract-aadhaar"
+                    : "http://127.0.0.1:8000/extract-aadhaar", {
                 method: "POST",
                 body: formData,
             });

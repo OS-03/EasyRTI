@@ -3,7 +3,7 @@ import { Request } from "../models/request.model.js";
 import axios from 'axios';
 import pkg from 'lodash';
 const { debounce } = pkg;
-const isProd = false;
+const isProd = true;
 // citizen will post a request
 export const postRequest = async (req, res) => {
     try {
@@ -135,7 +135,7 @@ export const getUserRequests = async (req, res) => {
             for (const request of requests) {
                
                 if (!request.summary) {
-                    const response = await axios.post('http://127.0.0.1:8000/text-summarize-response', {
+                    const response = await axios.post( isProd ? "https://easyrti-model.onrender.com/text-summarize-response" :'http://127.0.0.1:8000/text-summarize-response', {
                         text: request.description,
                     });
         

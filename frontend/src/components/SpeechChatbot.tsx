@@ -336,7 +336,7 @@ const SpeechChatbot = () => {
                 <PopoverTrigger asChild>
                     <button className="fixed bottom-5 left-5 w-24 h-24 bg-gradient-to-br from-orange-500 via-orange-100 via-neutral-100 to-emerald-500 rounded-full flex justify-center items-center shadow-lg cursor-pointer z-50">
                         <img
-                            src="./public/chatbot_1.png"
+                            src="https://res.cloudinary.com/dmf0l0i74/image/upload/v1745105473/chatbot_1_hdbxco.png"
                             alt="Chatbot Icon"
                             className="w-20 h-20 rounded-full"
                         />

@@ -1,8 +1,5 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signin from "./components/auth/Signin";
 import Signup from "./components/auth/Signup";
@@ -22,7 +19,6 @@ import FAQ from "./components/shared/FAQ";
 import UserProtectedRoute from "./components/UserProtectedRoute";
 import RequestStatus from "./components/RequestStatus";
 import Rules from "./components/Rules";
-import PostRequestdemo from "./components/PostRequestdemo";
 import CookiesPopover from "./components/CookiesPopover";
 import ForgetPassword from "./components/auth/ForgetPassword";
 
@@ -55,11 +51,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/viewstatus",
-    element: <UserProtectedRoute><RequestStatus/></UserProtectedRoute>
-  },
-  {
-    path: "/demorequests",
-    element: <UserProtectedRoute><PostRequestdemo/></UserProtectedRoute>
+    element: <UserProtectedRoute><RequestStatus /></UserProtectedRoute>
   },
   {
     path: "/contact",
@@ -75,7 +67,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/rules",
-    element:<UserProtectedRoute><Rules/></UserProtectedRoute>
+    element: <UserProtectedRoute><Rules /></UserProtectedRoute>
   },
   {
     path: "/admin/dashboard",
@@ -97,7 +89,7 @@ const appRouter = createBrowserRouter([
     path: "/admin/applicants",
     element: <ProtectedRoute><Applicants /></ProtectedRoute>
   },
- 
+
   {
     path: "*",
     element: <ErrorPage />
@@ -116,9 +108,8 @@ export default function App() {
       }}
 
     >
-
       <RouterProvider router={appRouter} />
-      <CookiesPopover/>
+      <CookiesPopover />
     </Container>
   );
 }
