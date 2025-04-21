@@ -23,6 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Define the label-to-department mapping
 label_to_department = {
     0: "Agriculture",
