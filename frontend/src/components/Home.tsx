@@ -19,7 +19,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         if (user?.role === "government") {
-            navigate("/admin/department");
+            navigate("/admin/dashboard");
         }
     }, [user, navigate]);
 
@@ -27,8 +27,6 @@ const Home: React.FC = () => {
         <div >
             <Navbar />
             <HeroSection />
-            {/* <CategoryCarousel /> */}
-            {/* <LatestJobs /> */}
             <SpeechChatbot/>
             <Footer />
         </div>

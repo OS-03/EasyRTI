@@ -89,7 +89,7 @@ const Navbar = (props: Props) => {
           <a href="/">
             <div className="flex gap-5">
               <img src={Emblem} alt="Emblem" className="h-13 w-9" />
-              <span className="dark:hover:bg-slate-100  focus-visible:ring-slate-500/50 relative before:absolute before:inset-0  before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms] text-5xl font-semibold  bg-gradient-to-br from-orange-500 via-orange-100 via-neutral-100 to-emerald-500  bg-clip-text text-transparent font-script drop-shadow-sm">
+              <span className="tracking-tight   dark:hover:bg-slate-100  focus-visible:ring-slate-500/50 relative before:absolute before:inset-0  before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms] text-5xl font-semibold  bg-gradient-to-br from-orange-500 via-orange-100 via-neutral-100 to-emerald-500  bg-clip-text text-transparent font-script drop-shadow-sm">
                 EasyRTI
               </span>
             </div>

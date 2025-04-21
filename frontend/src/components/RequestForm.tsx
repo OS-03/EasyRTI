@@ -18,7 +18,7 @@ import Footer from './shared/Footer';
 // Add your Mapbox access token 
 const MAPBOX_ACCESS_TOKEN = (import.meta as any).env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const isProd = true;
+const isProd = false;
 
 const RequestForm = () => {
     let debounceTimeout: NodeJS.Timeout;
@@ -241,7 +241,7 @@ const RequestForm = () => {
                         />
                         {isProcessingAadhaar && (
                             <div className="my-4 p-2 border rounded-md bg-gray-100">
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin inline-block" /> Processing Aadhaar...
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin inline-block" /> Processing Aadhaar...Please Wait...
                             </div>
                         )}
                     </div>

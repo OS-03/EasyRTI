@@ -1,2 +1,12 @@
 .env
 node_modules
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.pot
+*.mo        
+.venv
