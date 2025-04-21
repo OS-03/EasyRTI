@@ -15,7 +15,7 @@ import Footer from './shared/Footer';
 // Add your Mapbox access token 
 const MAPBOX_ACCESS_TOKEN = (import.meta as any).env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const isProd = false;;
+const isProd = true;
 
 const RequestForm = () => {
     let debounceTimeout: NodeJS.Timeout;
