@@ -9,8 +9,7 @@ import { APPLICATION_API_END_POINT, REQUEST_API_END_POINT } from '@/utils/consta
 import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setSingleRequest } from '@/redux/requestSlice'; // Ensure this action exists
-// Removed unused import
-import useSetAllApplicate from '../hooks/useGetAllRequest'; // Ensure this hook exists
+// Removed unused import // Ensure this hook exists
 import Footer from './shared/Footer';
 
 // Removed unused import
@@ -18,7 +17,7 @@ import Footer from './shared/Footer';
 // Add your Mapbox access token 
 const MAPBOX_ACCESS_TOKEN = (import.meta as any).env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const isProd = false;
+const isProd = true;
 
 const RequestForm = () => {
     let debounceTimeout: NodeJS.Timeout;
