@@ -1,2 +1,4 @@
 requirements/
+backend/.gitignore
+frontend/.gitignore
 .DS_Store
