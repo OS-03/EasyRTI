@@ -57,4 +57,4 @@ ultralytics-thop==2.0.14
 urllib3==2.4.0
 uvicorn==0.34.0
 sentencepiece==0.1.99
-pytesseract==0.3.
+pytesseract==0.3.10
