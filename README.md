@@ -2,7 +2,7 @@
 
 An Automated RTI Portal For Indian Citizen
 
-EasyRTI is a comprehensive platform designed to streamline the RTI (Right to Information) process. It includes a frontend built with Vite.js and Material UI, a backend powered by Node.js and Express, and an AI model for text classification and summarization.
+EasyRTI is a comprehensive platform designed to ease the RTI (Right to Information) process. It includes a frontend built with Vite.js and Material UI, a backend powered by Node.js and Express.js , and AI models for text classification and summarization along AI chatbot using puter.js.
 #### This project was demonstrated in prakalp 3.0 2025 hackathon held at Fr. Conceicao Rodrigues College of Engineering Bandra, mumbai-400051
 ---
 
