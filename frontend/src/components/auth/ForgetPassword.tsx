@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import axios from "axios";
 import Footer from "../shared/Footer";
 import { USER_API_END_POINT } from "../../utils/constant";
-import { redirect } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 const ForgetPassword = () => {

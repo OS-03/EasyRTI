@@ -107,7 +107,7 @@ EasyRTI is a comprehensive platform designed to streamline the RTI (Right to Inf
 
 3. Start the model server:
    ```bash
-   python app.py
+   uvicorn bert_model:app
    ```
 
 4. The model will run on `http://127.0.0.1:8000`.
