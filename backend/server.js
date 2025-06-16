@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import path from "path";
 import methodoverride from "method-override";
 import ejsMate from "ejs-mate";
-//import ExpressError from "./utils/ExpressError.js";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
@@ -30,12 +29,9 @@ app.use(express.json());
 app.use(methodoverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(logger("dev")); // Use morgan middleware for logging HTTP requests
-// parse application/json
+// parse application/json // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
 dotenv.config({});
 
 //databse connection

@@ -122,13 +122,13 @@ export const getApplicants = async (req, res) => {
                 createdAt: app.createdAt,
                 status: app.status,
                 applicant: {
-                    fullname: app.applicant?.fullname || "N/A",
-                    email: app.applicant?.email || "N/A",
+                    fullname: app.applicant?.fullname,
+                    email: app.applicant?.email,
                 },
                 request: {
-                    title: app.request?.title || "N/A",
+                    title: app.request?.title,
                     department: {
-                        name: app.request?.department?.name || "N/A",
+                        name: app.request?.department?.name,
                     },
                     summary: app.request?.summary,
                 },
